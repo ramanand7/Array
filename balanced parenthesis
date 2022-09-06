@@ -1,0 +1,25 @@
+class Solution
+{
+    public:
+    unordered_map<char,int>mp={{'[',-1},{'{',-2},{'(',-3},{']',1},{'}',2},{')',3}};
+    bool ispar(string s)
+    {
+            stack<char> st;
+ 
+            for(char& c : s){
+                
+                   if(mp[c]<0) st.push(c);
+                   
+                   else{
+                       if(st.empty()) return false;
+                       
+                       if(mp[st.top()] + mp[c] != 0) return false;
+                       
+                       st.pop();
+                   }
+               }
+               
+               return st.size()==0;
+    }
+
+};
