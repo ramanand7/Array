@@ -1,0 +1,56 @@
+    stack<int> st;
+    bool higherpre(char a,char b){
+        unordered_map<char,int> m;
+        m['+'] = 1;
+        m['-'] = 1;
+        m['*'] = 2;
+        m['/'] = 2;
+        m['^'] = 3;
+        m['('] = 0;
+        if(m[a]>m[b]) return true;
+        else if(m[a]<m[b]) return false;
+        else{
+            if(a=='^' && b=='^')  return true;
+            else return false;
+        }
+    }
+    bool isoperator(char a){
+        if(a=='^'||a=='*'||a=='/'||a=='+'||a=='-'||a=='('||a==')') return true;
+        return false;
+    }
+    string infixToPostfix(string s) {
+       string res = "";
+       int n = s.length();
+         for(int i=0;i<n;i++){
+           if(isoperator(s[i])==false)
+               res+=s[i];
+           else{
+               if(st.empty())
+                   st.push(s[i]);
+               else if(s[i]=='(')
+                   st.push(s[i]);
+               else if(s[i]==')'){
+                   while(st.top()!='('){
+                       res+=st.top();
+                       st.pop();
+                   }
+                   st.pop();
+               }
+               else if(higherpre(s[i],st.top()))
+                   st.push(s[i]);
+               else if(higherpre(s[i],st.top())==false){
+                   while(st.empty()==false&&higherpre(s[i],st.top())==false){
+                       res+=st.top();
+                       st.pop();
+                   }
+                   st.push(s[i]);
+               }
+               
+           }   
+       }
+       while(st.empty()==false){
+           res+=st.top();
+           st.pop();
+       }
+       return res;
+    }
