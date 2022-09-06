@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+int min_ele = INT_MAX;
+void push(stack<int>& s, int a){
+    if(s.empty()){
+        s.push(a);
+        min_ele = a;
+    }else{
+        if(a<min_ele){
+            int val = 2*a-min_ele;
+            s.push(val);
+            min_ele = a;
+        }else{
+            s.push(a);
+        }
+    }
+}
+
+bool isFull(stack<int>& s,int n){
+     return s.size()==n;
+}
+
+bool isEmpty(stack<int>& s){
+   return s.empty();
+}
+
+int pop(stack<int>& s){
+    if(s.empty()) return -1;
+    int cur = s.top();s.pop();
+    if(cur<min_ele){
+        return 0;
+    }else{
+        int premin = min_ele;
+        int val = 2*min_ele-cur;
+        min_ele = val;
+        return 0;
+    }
+}
+
+int getMin(stack<int>& s){
+    if(s.empty()) return -1;
+    return min_ele;
+}
